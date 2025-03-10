@@ -2,6 +2,34 @@ import os
 import numpy as np
 import torch
 
+
+def generate_random_mask(cube_shape, mask_size):
+    """
+    Generate a random mask within the cube.
+    Args:
+        cube_shape: Shape of the input cube (z, y, x).
+        mask_size: Size of the mask (z, y, x).
+    Returns:
+        mask_lims: Limits of the mask in the format [zlims, ylims, xlims].
+    """
+    z, y, x = cube_shape
+    mask_z, mask_y, mask_x = mask_size
+    
+    # Randomly choose the starting point for the mask
+    z_start = np.random.randint(0, z - mask_z)
+    y_start = np.random.randint(0, y - mask_y)
+    x_start = np.random.randint(0, x - mask_x)
+    
+    # Define the mask limits
+    mask_lims = np.array([
+        [z_start, z_start + mask_z],
+        [y_start, y_start + mask_y],
+        [x_start, x_start + mask_x]
+    ])
+    
+    return mask_lims
+
+
 flag =None
 cli_args = os.environ.get("CLI_ARGS", "").split()
 if cli_args[0] == 'b':

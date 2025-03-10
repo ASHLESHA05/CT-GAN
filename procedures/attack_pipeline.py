@@ -249,10 +249,11 @@ class scan_manipulator:
         print("===Init Tamperer===")
         self.scan = None
         self.load_path = None
-        self.m_zlims = config['mask_zlims']
-        self.m_ylims = config['mask_ylims']
-        self.m_xlims = config['mask_xlims']
-
+        # self.m_zlims = config['mask_zlims']
+        # self.m_ylims = config['mask_ylims']
+        # self.m_xlims = config['mask_xlims']
+        self.m_zlims,self.m_ylims,self.m_xlims = generate_random_mask(config['cube_shape'], config['mask_size'])
+    
         # Load model and parameters
         self.model_inj_path = config['modelpath_inject']
         self.model_rem_path = config['modelpath_remove']
