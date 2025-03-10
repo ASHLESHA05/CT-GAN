@@ -59,7 +59,7 @@ def load_nifti(path2scan):
                     first_file = os.listdir(full_path)[0]
                     nifti_file = os.path.join(full_path, first_file)
             
-        print(path2scan,"--|--",nifti_file)
+        # print(path2scan,"--|--",nifti_file)
         nifti_img = nib.load(nifti_file)
         scan = np.array(nifti_img.get_fdata(), dtype=np.float32)
         spacing = np.array(nifti_img.header.get_zooms())
