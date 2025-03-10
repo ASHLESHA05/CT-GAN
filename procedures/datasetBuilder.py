@@ -148,72 +148,38 @@ class Extractor:
             raise TypeError
     
     # Augmentation details
-    def add_random_noise(x, noise_factor=0.1):
-        noise = np.random.normal(0, noise_factor, x.shape)
-        return x + noise
-    def random_scale(x, scale_range=(0.8, 1.2)):
-        scale_factor = np.random.uniform(scale_range[0], scale_range[1])
-        return scipy.ndimage.zoom(x, zoom=(1, scale_factor, scale_factor), mode='reflect')
-    def random_crop(x, crop_size=(24, 24)):
-        z, y, x = x.shape
-        y_start = np.random.randint(0, y - crop_size[0])
-        x_start = np.random.randint(0, x - crop_size[1])
-        return x[:, y_start:y_start + crop_size[0], x_start:x_start + crop_size[1]]
-    def adjust_brightness_contrast(x, brightness_range=(0.8, 1.2), contrast_range=(0.8, 1.2)):
-        brightness = np.random.uniform(brightness_range[0], brightness_range[1])
-        contrast = np.random.uniform(contrast_range[0], contrast_range[1])
-        x = x * brightness
-        x = (x - np.mean(x)) * contrast + np.mean(x)
-        return x
-    def elastic_deformation(x, alpha=10, sigma=5):
-        shape = x.shape
-        dx = scipy.ndimage.gaussian_filter((np.random.rand(*shape) * 2 - 1), sigma, mode="constant", cval=0) * alpha
-        dy = scipy.ndimage.gaussian_filter((np.random.rand(*shape) * 2 - 1), sigma, mode="constant", cval=0) * alpha
-        dz = np.zeros_like(dx)
-        indices = np.reshape(np.arange(shape[0]), (-1, 1, 1)) + dz, np.reshape(np.arange(shape[1]), (1, -1, 1)) + dy, np.reshape(np.arange(shape[2]), (1, 1, -1)) + dx
-        return scipy.ndimage.map_coordinates(x, indices, order=1, mode='reflect')
-    def flip_z(x):
-        return np.flip(x, 0)
-    def gamma_correction(x, gamma_range=(0.8, 1.2)):
-        gamma = np.random.uniform(gamma_range[0], gamma_range[1])
-        return x ** gamma
+    # def add_random_noise(x, noise_factor=0.1):
+    #     noise = np.random.normal(0, noise_factor, x.shape)
+    #     return x + noise
+    # def random_scale(x, scale_range=(0.8, 1.2)):
+    #     scale_factor = np.random.uniform(scale_range[0], scale_range[1])
+    #     return scipy.ndimage.zoom(x, zoom=(1, scale_factor, scale_factor), mode='reflect')
+    # def random_crop(x, crop_size=(24, 24)):
+    #     z, y, x = x.shape
+    #     y_start = np.random.randint(0, y - crop_size[0])
+    #     x_start = np.random.randint(0, x - crop_size[1])
+    #     return x[:, y_start:y_start + crop_size[0], x_start:x_start + crop_size[1]]
+    # def adjust_brightness_contrast(x, brightness_range=(0.8, 1.2), contrast_range=(0.8, 1.2)):
+    #     brightness = np.random.uniform(brightness_range[0], brightness_range[1])
+    #     contrast = np.random.uniform(contrast_range[0], contrast_range[1])
+    #     x = x * brightness
+    #     x = (x - np.mean(x)) * contrast + np.mean(x)
+    #     return x
+    # def elastic_deformation(x, alpha=10, sigma=5):
+    #     shape = x.shape
+    #     dx = scipy.ndimage.gaussian_filter((np.random.rand(*shape) * 2 - 1), sigma, mode="constant", cval=0) * alpha
+    #     dy = scipy.ndimage.gaussian_filter((np.random.rand(*shape) * 2 - 1), sigma, mode="constant", cval=0) * alpha
+    #     dz = np.zeros_like(dx)
+    #     indices = np.reshape(np.arange(shape[0]), (-1, 1, 1)) + dz, np.reshape(np.arange(shape[1]), (1, -1, 1)) + dy, np.reshape(np.arange(shape[2]), (1, 1, -1)) + dx
+    #     return scipy.ndimage.map_coordinates(x, indices, order=1, mode='reflect')
+    # def flip_z(x):
+    #     return np.flip(x, 0)
+    # def gamma_correction(x, gamma_range=(0.8, 1.2)):
+    #     gamma = np.random.uniform(gamma_range[0], gamma_range[1])
+    #     return x ** gamma
     
-    def _augmentInstance(self, x0):
-        # Original augmentations
-        # xy flip
-        xf_x = np.flip(x0, 1)
-        xf_y = np.flip(x0, 2)
-        xf_xy = np.flip(xf_x, 2)
-        # xy shift
-        xs1 = scipy.ndimage.shift(x0, (0, 4, 4), mode='constant')
-        xs2 = scipy.ndimage.shift(x0, (0, -4, 4), mode='constant')
-        xs3 = scipy.ndimage.shift(x0, (0, 4, -4), mode='constant')
-        xs4 = scipy.ndimage.shift(x0, (0, -4, -4), mode='constant')
-        # small rotations
-        R = []
-        for ang in range(6, 360, 6):
-            R.append(rotate(x0, ang, axes=(1, 2), mode='reflect', reshape=False))
-        X = [x0, xf_x, xf_y, xf_xy, xs1, xs2, xs3, xs4] + R
-
-        # New augmentations
-        x_noise = self.add_random_noise(x0)
-        x_scale = self.random_scale(x0)
-        x_crop = self.random_crop(x0)
-        x_brightness = self.adjust_brightness_contrast(x0)
-        x_elastic = self.elastic_deformation(x0)
-        x_flip_z = self.flip_z(x0)
-        x_gamma = self.gamma_correction(x0)
-
-        # Add new augmentations to the list
-        X += [x_noise, x_scale, x_crop, x_brightness, x_elastic, x_flip_z, x_gamma]
-
-        # Remove instances which are cropped out of bounds of scan
-        Res = []
-        for x in X:
-            if (x.shape[0] != 0) and (x.shape[1] != 0) and (x.shape[2] != 0):
-                Res.append(x)
-        return Res
     # def _augmentInstance(self, x0):
+    #     # Original augmentations
     #     # xy flip
     #     xf_x = np.flip(x0, 1)
     #     xf_y = np.flip(x0, 2)
@@ -223,19 +189,53 @@ class Extractor:
     #     xs2 = scipy.ndimage.shift(x0, (0, -4, 4), mode='constant')
     #     xs3 = scipy.ndimage.shift(x0, (0, 4, -4), mode='constant')
     #     xs4 = scipy.ndimage.shift(x0, (0, -4, -4), mode='constant')
-
     #     # small rotations
     #     R = []
     #     for ang in range(6, 360, 6):
     #         R.append(rotate(x0, ang, axes=(1, 2), mode='reflect', reshape=False))
     #     X = [x0, xf_x, xf_y, xf_xy, xs1, xs2, xs3, xs4] + R
 
-    #     # remove instances which are cropped out of bounds of scan
+    #     # New augmentations
+    #     x_noise = self.add_random_noise(x0)
+    #     x_scale = self.random_scale(x0)
+    #     x_crop = self.random_crop(x0)
+    #     x_brightness = self.adjust_brightness_contrast(x0)
+    #     x_elastic = self.elastic_deformation(x0)
+    #     x_flip_z = self.flip_z(x0)
+    #     x_gamma = self.gamma_correction(x0)
+
+    #     # Add new augmentations to the list
+    #     X += [x_noise, x_scale, x_crop, x_brightness, x_elastic, x_flip_z, x_gamma]
+
+    #     # Remove instances which are cropped out of bounds of scan
     #     Res = []
     #     for x in X:
     #         if (x.shape[0] != 0) and (x.shape[1] != 0) and (x.shape[2] != 0):
     #             Res.append(x)
     #     return Res
+    def _augmentInstance(self, x0):
+        # xy flip
+        xf_x = np.flip(x0, 1)
+        xf_y = np.flip(x0, 2)
+        xf_xy = np.flip(xf_x, 2)
+        # xy shift
+        xs1 = scipy.ndimage.shift(x0, (0, 4, 4), mode='constant')
+        xs2 = scipy.ndimage.shift(x0, (0, -4, 4), mode='constant')
+        xs3 = scipy.ndimage.shift(x0, (0, 4, -4), mode='constant')
+        xs4 = scipy.ndimage.shift(x0, (0, -4, -4), mode='constant')
+
+        # small rotations
+        R = []
+        for ang in range(6, 360, 6):
+            R.append(rotate(x0, ang, axes=(1, 2), mode='reflect', reshape=False))
+        X = [x0, xf_x, xf_y, xf_xy, xs1, xs2, xs3, xs4] + R
+
+        # remove instances which are cropped out of bounds of scan
+        Res = []
+        for x in X:
+            if (x.shape[0] != 0) and (x.shape[1] != 0) and (x.shape[2] != 0):
+                Res.append(x)
+        return Res
 
     def plot_sample(self,X):
         import matplotlib.pyplot as plt
