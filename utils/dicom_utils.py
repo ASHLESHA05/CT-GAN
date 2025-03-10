@@ -51,7 +51,7 @@ def load_nifti(path2scan):
         for file in os.listdir(path2scan):
             if(file.endswith('t1ce.nii.gz') or file.endswith('t1ce.nii')):
                 nifti_file = os.path.join(path2scan, file)
-        print(path2scan,nifti_file)
+        print(path2scan,"--|--",nifti_file)
         nifti_img = nib.load(nifti_file)
         scan = np.array(nifti_img.get_fdata(), dtype=np.float32)
         spacing = np.array(nifti_img.header.get_zooms())
