@@ -114,7 +114,7 @@ else:
     config['healthy_samples'] = "/kaggle/working/output2/healthy_samples.npy"
 
     config['unhealthy_scans_raw'] = "/kaggle/input/frequently-traveling-human-phantom-fthp-dataset"
-    config['unhealthy_coords'] = "/kaggle/input/brain-tumor-coordinates_healthy.csv"
+    config['unhealthy_coords'] = "/kaggle/input/brain-tumor-coordinates.csv"
     # config['unhealthy_coords'] = r"D:\CapstoneProject\Attack_prep\updated_roi_centroids.csv"
     config['unhealthy_samples'] = "/kaggle/working/output2/unhealthy_samples.npy"
 
