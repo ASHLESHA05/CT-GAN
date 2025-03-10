@@ -18,13 +18,13 @@ if flag=='l':
     config['healthy_coords'] = "D:\\CapstoneProject\\DataSet\\healthy_lung.csv"
     config['healthy_samples'] = "output/healthy_samples.npy"
 
-    config['unhealthy_scans_raw'] = "D:/CapstoneProject/DataSet/LungsCT-BigData/manifest-1600709154662/LIDC-SMALL"
-    config['unhealthy_coords'] = r"D:/CapstoneProject/DataSet/LungsCT-BigData/manifest-1600709154662/small_roi.csv"
+    config['unhealthy_scans_raw'] = r"D:\CAPSTONE\BraTS2021\BraTS2021_Training_Data"
+    config['unhealthy_coords'] = r"D:\CAPSTONE\BraTS2021\BraTS2021_tumor_centroids.csv"
     # config['unhealthy_coords'] = r"D:\CapstoneProject\Attack_prep\updated_roi_centroids.csv"
     config['unhealthy_samples'] = "output/unhealthy_samples.npy"
 
     config['traindata_coordSystem'] = "vox"  # the coord system used to note the locations of the evidence ('world' or 'vox')
-    BASE_PATH = r'D:\CapstoneProject\Mirskey-DataHub\CT-GAN'
+    BASE_PATH = r'D:\CAPSTONE\CT-GAN'
     # Model & Progress Location
     config['modelpath_inject'] = os.path.join(BASE_PATH,"data", "models", "INJ")
     config['modelpath_remove'] = os.path.join(BASE_PATH,"data", "models", "REM")
@@ -76,13 +76,13 @@ else:
     config['healthy_coords'] = r"D:\CapstoneProject\Attack_prep\tumor_analysis.csv"
     config['healthy_samples'] = "output2/healthy_samples.npy"
 
-    config['unhealthy_scans_raw'] = r"D:\CapstoneProject\DataSet\BraTS2021\TestData"
-    config['unhealthy_coords'] = r"D:\CapstoneProject\Attack_prep\tumor_analysis.csv"
+    config['unhealthy_scans_raw'] = r"D:\CAPSTONE\BraTS2021\BraTS2021_Training_Data"
+    config['unhealthy_coords'] = r"D:\CAPSTONE\BraTS2021\BraTS2021_tumor_centroids.csv"
     # config['unhealthy_coords'] = r"D:\CapstoneProject\Attack_prep\updated_roi_centroids.csv"
     config['unhealthy_samples'] = "output2/unhealthy_samples.npy"
 
     config['traindata_coordSystem'] = "vox"  # the coord system used to note the locations of the evidence ('world' or 'vox')
-    BASE_PATH = r'D:\CapstoneProject\Mirskey-DataHub\CT-GAN'
+    BASE_PATH = r'D:\CAPSTONE\CT-GAN'
     # Model & Progress Location
     config['modelpath_inject'] = os.path.join(BASE_PATH,"data2", "models", "INJ")
     config['modelpath_remove'] = os.path.join(BASE_PATH,"data2", "models", "REM")

@@ -107,9 +107,6 @@ class Extractor:
         print("saving the dataset")
         np.save(self.dst_path,instances)
 
-
-
-
     def _processJob(self,args):
         # print("Working on job: " + args[0] + "   "+args[3]+" coord (zyx): ", args[1], "cube shape",args[2])
         # eg args[0]:  D:/CapstoneProject/DataSet/LungsCT-BigData/manifest-1600709154662/LIDC-IDRI\LIDC-IDRI-0001/01-01-2000-NA-NA-30178/3000566.000000-NA-03192

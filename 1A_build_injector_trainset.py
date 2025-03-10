@@ -1,3 +1,7 @@
+import sys
+import os
+os.environ["CLI_ARGS"] = " ".join(arg.lower() for arg in sys.argv[1:]) if len(sys.argv) > 1 else "b"
+
 from procedures.datasetBuilder import *
 
 if __name__ == '__main__':

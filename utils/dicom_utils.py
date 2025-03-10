@@ -1,5 +1,6 @@
 import pydicom #for loading dicom
 import SimpleITK as sitk #for loading mhd/raw
+import nibabel as nib #for loading nifti
 import os
 import numpy as np
 import scipy.ndimage
@@ -9,7 +10,18 @@ from pydicom.uid import UID
 #DICOM: send path to any *.dcm file where containing dir has the other slices (dcm files), or path to the dir itself
 #MHD/RAW: send path to the *.mhd file where containing die has the coorisponding *.raw file
 def load_scan(path2scan):
-    # print(os.listdir(path2scan))
+    # ext = path2scan.split('.')[-1].lower()
+    # if ext in ['mhd', 'raw']:
+    #     return load_mhd(path2scan)
+    # elif ext in ['nii', 'gz']:
+    #     return load_nifti(path2scan)
+    # elif ext == 'dcm':
+    #     return load_dicom(os.path.split(path2scan)[0])
+    # elif any(file.endswith('.dcm') for file in os.listdir(path2scan)):
+    #     return load_dicom(path2scan)
+    # else:
+    #     raise Exception('No valid scan [series] found in given file/directory')
+
     if (path2scan.split('.')[-1] == 'mhd') or (path2scan.split('.')[-1] == 'raw'):
         return load_mhd(path2scan)
     elif path2scan.split('.')[-1] == 'dcm':
@@ -18,6 +30,8 @@ def load_scan(path2scan):
     elif any(file.endswith('.dcm') for file in os.listdir(path2scan)):
         # print("Here:",path2scan)
         return load_dicom(path2scan)
+    elif any(file.endswith('t1ce.nii.gz') for file in os.listdir(path2scan)):
+        return load_nifti(path2scan)
     else:
         raise Exception('No valid scan [series] found in given file/directory')
 
@@ -29,6 +43,18 @@ def load_mhd(path2scan):
     orientation = np.transpose(np.array(itkimage.GetDirection()).reshape((3, 3)))
     origin = np.flip(np.array(itkimage.GetOrigin()),axis=0) #origionally in yxz format (read xy in viewers but sanved as yx)
     return scan, spacing, orientation, origin, None #output in zyx format
+
+def load_nifti(path2scan):
+    for file in os.listdir(path2scan):
+        if(file.endswith('t1ce.nii.gz')):
+            nifti_file = os.path.join(path2scan, file)
+    nifti_img = nib.load(nifti_file)
+    scan = np.array(nifti_img.get_fdata(), dtype=np.float32)
+    spacing = np.array(nifti_img.header.get_zooms())
+    affine = nifti_img.affine
+    orientation = affine[:3, :3]
+    origin = affine[:3, 3]
+    return scan, spacing, orientation, origin, None
 
 def load_dicom(path2scan_dir):
     dicom_folder = path2scan_dir
@@ -105,6 +131,7 @@ def save_dicom(modified_scan, original_raw_slices, dst_directory):
         
         # Save the modified slice
         slice_dcm.save_as(os.path.join(dst_directory, f"slice_{i}.dcm"))
+        
 #img_array: 3d numpy matrix, z,y,x
 def toDicom(save_dir, img_array,  pixel_spacing, orientation):
     ref_scan = pydicom.dcmread('utils/ref_scan.dcm') #slice from soem real scan so we can copy the meta data
