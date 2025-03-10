@@ -109,12 +109,12 @@ else:
     # # config['unhealthy_coords'] = r"D:\CapstoneProject\Attack_prep\updated_roi_centroids.csv"
     # config['unhealthy_samples'] = "output2/unhealthy_samples.npy"
     
-    config['healthy_scans_raw'] = "/kaggle/input/brats2021"
-    config['healthy_coords'] = '/kaggle/input/brain-tumor-coordinates.csv'
+    config['healthy_scans_raw'] = "/kaggle/input/frequently-traveling-human-phantom-fthp-dataset"
+    config['healthy_coords'] = '/kaggle/input/brain-tumor-coordinates/BraTS2021_tumor_centroids.csv'
     config['healthy_samples'] = "/kaggle/working/output2/healthy_samples.npy"
 
-    config['unhealthy_scans_raw'] = "/kaggle/input/frequently-traveling-human-phantom-fthp-dataset"
-    config['unhealthy_coords'] = "/kaggle/input/brain-tumor-coordinates.csv"
+    config['unhealthy_scans_raw'] = "/kaggle/input/brats2021"
+    config['unhealthy_coords'] = "/kaggle/input/brain-tumor-coordinates/BraTS2021_tumor_centroids.csv"
     # config['unhealthy_coords'] = r"D:\CapstoneProject\Attack_prep\updated_roi_centroids.csv"
     config['unhealthy_samples'] = "/kaggle/working/output2/unhealthy_samples.npy"
 
@@ -156,3 +156,4 @@ else:
     os.makedirs(config['modelpath_inject'], exist_ok=True)
     os.makedirs(config['modelpath_remove'], exist_ok=True)
     os.makedirs(config['progress'], exist_ok=True)
+    
