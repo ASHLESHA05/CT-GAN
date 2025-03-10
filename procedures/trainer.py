@@ -58,7 +58,7 @@ class Trainer:
 
 
         # Loss functions
-        self.criterion_GAN = nn.MSELoss()
+        self.criterion_GAN = nn.HuberLoss(delta=1.0)
         self.criterion_pixelwise = nn.L1Loss()
 
         # Loss weights
@@ -273,28 +273,28 @@ class UNetGenerator(nn.Module):
             self.up1 = nn.Sequential(
                 nn.ConvTranspose3d(gf * 8, gf * 8, kernel_size=4, stride=2, padding=1),
                 nn.BatchNorm3d(gf * 8, momentum=0.8),
-                nn.ReLU(inplace=True),
-                nn.Dropout(0.5),
+                nn.LeakyReLU(0.2, inplace=True),
+                nn.Dropout(0.3),
                 ResidualBlock(gf * 8)  # Add residual block
             )
             self.up2 = nn.Sequential(
                 nn.ConvTranspose3d(gf * 16, gf * 4, kernel_size=4, stride=2, padding=1),
                 nn.BatchNorm3d(gf * 4, momentum=0.8),
-                nn.ReLU(inplace=True),
-                nn.Dropout(0.5),
+                nn.LeakyReLU(0.2, inplace=True),
+                nn.Dropout(0.3),
                 ResidualBlock(gf * 4)  # Add residual block
             )
             self.up3 = nn.Sequential(
                 nn.ConvTranspose3d(gf * 8, gf * 2, kernel_size=4, stride=2, padding=1),
                 nn.BatchNorm3d(gf * 2, momentum=0.8),
-                nn.ReLU(inplace=True),
-                nn.Dropout(0.5),
+                nn.LeakyReLU(0.2, inplace=True),
+                nn.Dropout(0.3),
                 ResidualBlock(gf * 2)  # Add residual block
             )
             self.up4 = nn.Sequential(
                 nn.ConvTranspose3d(gf * 4, gf, kernel_size=4, stride=2, padding=1),
                 nn.BatchNorm3d(gf, momentum=0.8),
-                nn.ReLU(inplace=True),
+                nn.LeakyReLU(0.2, inplace=True),
                 ResidualBlock(gf)  # Add residual block
             )
         else:
@@ -332,28 +332,28 @@ class UNetGenerator(nn.Module):
             self.up1 = nn.Sequential(
                 nn.ConvTranspose3d(gf * 8, gf * 8, kernel_size=4, stride=2, padding=1),
                 nn.BatchNorm3d(gf * 8, momentum=0.8),
-                nn.ReLU(inplace=True),
-                nn.Dropout(0.5),
+                nn.LeakyReLU(0.2, inplace=True),
+                nn.Dropout(0.3),
                 # ResidualBlock(gf * 8)  # Add residual block
             )
             self.up2 = nn.Sequential(
                 nn.ConvTranspose3d(gf * 16, gf * 4, kernel_size=4, stride=2, padding=1),
                 nn.BatchNorm3d(gf * 4, momentum=0.8),
-                nn.ReLU(inplace=True),
-                nn.Dropout(0.5),
+                nn.LeakyReLU(0.2, inplace=True),
+                nn.Dropout(0.3),
                 # ResidualBlock(gf * 4)  # Add residual block
             )
             self.up3 = nn.Sequential(
                 nn.ConvTranspose3d(gf * 8, gf * 2, kernel_size=4, stride=2, padding=1),
                 nn.BatchNorm3d(gf * 2, momentum=0.8),
-                nn.ReLU(inplace=True),
-                nn.Dropout(0.5),
+                nn.LeakyReLU(0.2, inplace=True),
+                nn.Dropout(0.3),
                 # ResidualBlock(gf * 2)  # Add residual block
             )
             self.up4 = nn.Sequential(
                 nn.ConvTranspose3d(gf * 4, gf, kernel_size=4, stride=2, padding=1),
                 nn.BatchNorm3d(gf, momentum=0.8),
-                nn.ReLU(inplace=True),
+                nn.LeakyReLU(0.2, inplace=True),
                 # ResidualBlock(gf)  # Add residual block
             )
         self.final = nn.Sequential(
