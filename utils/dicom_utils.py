@@ -32,6 +32,8 @@ def load_scan(path2scan):
         return load_dicom(path2scan)
     elif any(file.endswith('t1ce.nii.gz') for file in os.listdir(path2scan)):
         return load_nifti(path2scan)
+    elif any(file.endswith('t1ce.nii') for file in os.listdir(path2scan)):
+        return load_nifti(path2scan)
     else:
         raise Exception('No valid scan [series] found in given file/directory')
 
@@ -46,7 +48,7 @@ def load_mhd(path2scan):
 
 def load_nifti(path2scan):
     for file in os.listdir(path2scan):
-        if(file.endswith('t1ce.nii.gz')):
+        if(file.endswith('t1ce.nii.gz') or file.endswith('t1ce.nii')):
             nifti_file = os.path.join(path2scan, file)
     nifti_img = nib.load(nifti_file)
     scan = np.array(nifti_img.get_fdata(), dtype=np.float32)

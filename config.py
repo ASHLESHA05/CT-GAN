@@ -99,18 +99,28 @@ else:
 
     config = {}
 
-    # Data Location
-    config['healthy_scans_raw'] = r"D:\CapstoneProject\DataSet\HealthyBrainTest"
-    config['healthy_coords'] = r"D:\CapstoneProject\Attack_prep\tumor_analysis.csv"
-    config['healthy_samples'] = "output2/healthy_samples.npy"
+    # # Data Location
+    # config['healthy_scans_raw'] = r"D:\CapstoneProject\DataSet\HealthyBrainTest"
+    # config['healthy_coords'] = r"D:\CapstoneProject\Attack_prep\tumor_analysis.csv"
+    # config['healthy_samples'] = "output2/healthy_samples.npy"
 
-    config['unhealthy_scans_raw'] = r"D:\CAPSTONE\BraTS2021\BraTS2021_Training_Data"
-    config['unhealthy_coords'] = r"D:\CAPSTONE\BraTS2021\BraTS2021_tumor_centroids.csv"
+    # config['unhealthy_scans_raw'] = r"D:\CAPSTONE\BraTS2021\BraTS2021_Training_Data"
+    # config['unhealthy_coords'] = r"D:\CAPSTONE\BraTS2021\BraTS2021_tumor_centroids.csv"
+    # # config['unhealthy_coords'] = r"D:\CapstoneProject\Attack_prep\updated_roi_centroids.csv"
+    # config['unhealthy_samples'] = "output2/unhealthy_samples.npy"
+    
+    config['healthy_scans_raw'] = "/kaggle/input/brats2021"
+    config['healthy_coords'] = '/kaggle/input/brain-tumor-coordinates.csv'
+    config['healthy_samples'] = "/kaggle/working/output2/healthy_samples.npy"
+
+    config['unhealthy_scans_raw'] = "/kaggle/input/frequently-traveling-human-phantom-fthp-dataset"
+    config['unhealthy_coords'] = "/kaggle/input/brain-tumor-coordinates_healthy.csv"
     # config['unhealthy_coords'] = r"D:\CapstoneProject\Attack_prep\updated_roi_centroids.csv"
-    config['unhealthy_samples'] = "output2/unhealthy_samples.npy"
+    config['unhealthy_samples'] = "/kaggle/working/output2/unhealthy_samples.npy"
 
     config['traindata_coordSystem'] = "vox"  # the coord system used to note the locations of the evidence ('world' or 'vox')
-    BASE_PATH = r'D:\CAPSTONE\CT-GAN'
+    # BASE_PATH = r'D:\CAPSTONE\CT-GAN'
+    BASE_PATH = '/kaggle/working'
     # Model & Progress Location
     config['modelpath_inject'] = os.path.join(BASE_PATH,"data2", "models", "INJ")
     config['modelpath_remove'] = os.path.join(BASE_PATH,"data2", "models", "REM")
