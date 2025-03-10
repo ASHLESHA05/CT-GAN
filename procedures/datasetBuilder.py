@@ -122,7 +122,7 @@ class Extractor:
             scan, spacing, orientation, origin, raw_slices = load_scan(scan_path)
             # scale the image
             #scan_resized, resize_factor = scale_scan(scan, spacing)
-            # compute sample coords as vox
+            # compute sample coords as vox 
             if coordSystem == 'world': #convert from world to vox
                 coord = world2vox(coord,spacing,orientation,origin)
             elif coordSystem != 'vox':

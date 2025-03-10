@@ -24,7 +24,6 @@ class Trainer:
         self.img_cols = config['cube_shape'][2]
         self.img_depth = config['cube_shape'][0]
         self.channels = 1
-        self.num_classes = 5
         self.img_shape = (self.channels, self.img_depth, self.img_rows, self.img_cols)  # PyTorch uses channels first
 
         # Configure data loader
@@ -57,11 +56,10 @@ class Trainer:
         self.optimizer_D = optim.Adam(self.discriminator.parameters(), lr=0.0002, betas=(0.5, 0.999))
 
 
-        # Loss functions
-        self.criterion_GAN = nn.MSELoss()
+        # Loss functionb
+        self.criterion_GAN =  nn.HuberLoss(delta=1.0)
         self.criterion_pixelwise = nn.L1Loss()
-
-        # Loss weights
+        
         self.lambda_pixel = 100
 
         # Get discriminator output shape for patch calculation
@@ -220,10 +218,10 @@ class ResidualBlock(nn.Module):
             nn.Conv3d(in_channels, in_channels, kernel_size=3, padding=1),
             nn.BatchNorm3d(in_channels)
         )
-    
-    def forward(self, x):
-        return x + self.conv(x)  # Residual connection
+        self.shortcut = nn.Conv3d(in_channels, in_channels, kernel_size=1)  # Identity mapping
 
+    def forward(self, x):
+        return self.shortcut(x) + self.conv(x)  # Residual connection
 class UNetGenerator(nn.Module):
     def __init__(self, img_shape, gf=100):
         super(UNetGenerator, self).__init__()
