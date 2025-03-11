@@ -21,7 +21,7 @@ def load_scan(path2scan):
     #     return load_dicom(path2scan)
     # else:
     #     raise Exception('No valid scan [series] found in given file/directory')
-
+    print(path2scan)
     if (path2scan.split('.')[-1] == 'mhd') or (path2scan.split('.')[-1] == 'raw'):
         return load_mhd(path2scan)
     elif path2scan.split('.')[-1] == 'dcm':
