@@ -49,12 +49,12 @@ def load_mhd(path2scan):
 def load_nifti(path2scan):
     try:
         for file in os.listdir(path2scan):
-            if file.endswith('t1ce.nii.gz') or file.endswith('t1ce.nii') or file.endswith('.nii'):
+            if file.endswith('.nii'):
                 full_path = os.path.join(path2scan, file)
 
                 if os.path.isfile(full_path):
                     nifti_file = full_path
-                else:
+                elif file.endswith('t1ce.nii.gz') or file.endswith('t1ce.nii'):
                     # If it's a directory, get the first file inside it
                     first_file = os.listdir(full_path)[0]
                     nifti_file = os.path.join(full_path, first_file)
