@@ -86,7 +86,7 @@ class Trainer:
 
         for epoch in range(epochs):
             # save model
-            if epoch > 0:
+            if epoch%10 == 0:
                 print("Saving Models...")
                 torch.save(self.generator.state_dict(), os.path.join(self.modelpath, "G_model.pth"))
                 torch.save(self.discriminator.state_dict(), os.path.join(self.modelpath, "D_model.pth"))
