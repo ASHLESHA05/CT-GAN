@@ -150,12 +150,14 @@ class Trainer:
 
                 # Update progress
                 elapsed_time = datetime.datetime.now() - start_time
-                print(f"\033[1;32m[Epoch {epoch}/{epochs}]\033[0m "  # Green for epoch
-                    f"\033[1;34m[Batch {batch_i}/{self.dataloader.n_batches}]\033[0m "  # Blue for batch
-                    f"\033[1;31m[D loss: {loss_D.item():.6f}]\033[0m "  # Red for discriminator loss
-                    f"\033[1;33m[Acc: {acc:.2f}%]\033[0m "  # Yellow for accuracy
-                    f"\033[1;35m[G loss: {loss_G.item():.6f}]\033[0m "  # Magenta for generator loss
-                    f"\033[1;36m[Time: {elapsed_time}]\033[0m")  # Cyan for elapsed time
+                
+                if batch_i%20 == 0:
+                    print(f"\033[1;32m[Epoch {epoch}/{epochs}]\033[0m "  # Green for epoch
+                        f"\033[1;34m[Batch {batch_i}/{self.dataloader.n_batches}]\033[0m "  # Blue for batch
+                        f"\033[1;31m[D loss: {loss_D.item():.6f}]\033[0m "  # Red for discriminator loss
+                        f"\033[1;33m[Acc: {acc:.2f}%]\033[0m "  # Yellow for accuracy
+                        f"\033[1;35m[G loss: {loss_G.item():.6f}]\033[0m "  # Magenta for generator loss
+                        f"\033[1;36m[Time: {elapsed_time}]\033[0m")  # Cyan for elapsed time
 
                 # If at save interval => save generated image samples
                 if batch_i % sample_interval == 0:
