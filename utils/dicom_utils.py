@@ -32,7 +32,7 @@ def load_scan(path2scan):
         return load_dicom(path2scan)
     elif any(file.endswith('t1ce.nii.gz') for file in os.listdir(path2scan)):
         return load_nifti(path2scan)
-    elif any(path2scan.endswith('t1ce.nii')):
+    elif path2scan.endswith('t1ce.nii'):
         return load_nifti(path2scan)
     else:
         raise Exception('No valid scan [series] found in given file/directory')
