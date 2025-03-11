@@ -110,7 +110,7 @@ else:
     # config['unhealthy_samples'] = "output2/unhealthy_samples.npy"
     
     config['healthy_scans_raw'] = "/kaggle/input/healthybrain-at"
-    config['healthy_coords'] = '/kaggle/input/brain-tumor-csv/Healthy_brain_fake_tumor_loc.csv'
+    config['healthy_coords'] = '/kaggle/input/healty-braincsv-at/Healthy_brain_fake_tumor_loc.csv'
     config['healthy_samples'] = "/kaggle/working/output2/healthy_samples.npy"
 
     config['unhealthy_scans_raw'] = "/kaggle/input/brats21"
