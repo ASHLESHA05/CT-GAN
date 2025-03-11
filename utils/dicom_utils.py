@@ -32,6 +32,8 @@ def load_scan(path2scan):
         return load_dicom(path2scan)
     elif any(file.endswith('t1ce.nii.gz') for file in os.listdir(path2scan)):
         return load_nifti(path2scan)
+    elif any(file.endswith('t1ce.nii') for file in os.listdir(path2scan)):
+        return load_nifti(path2scan)
     elif path2scan.endswith('t1ce.nii'):
         return load_nifti(path2scan)
     else:
