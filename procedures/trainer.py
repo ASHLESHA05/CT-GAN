@@ -53,12 +53,13 @@ class Trainer:
         print(self.discriminator)
 
         # Optimizers
-        self.optimizer_G = optim.Adam(self.generator.parameters(), lr=0.000001, betas=(0.5, 0.999))
+        self.optimizer_G = optim.Adam(self.generator.parameters(), lr=0.0002, betas=(0.5, 0.999))
         self.optimizer_D = optim.Adam(self.discriminator.parameters(), lr=0.0002, betas=(0.5, 0.999))
 
 
         # Loss functions
-        self.criterion_GAN = nn.HuberLoss(delta=1.0)
+        # self.criterion_GAN = nn.HuberLoss(delta=1.0)
+        self.criterion_GAN = nn.MSE()
         self.criterion_pixelwise = nn.L1Loss()
 
         # Loss weights
