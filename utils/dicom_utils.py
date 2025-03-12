@@ -176,9 +176,12 @@ def toDicom(save_dir, img_array,  pixel_spacing, orientation):
 
 def scale_scan(scan,spacing,factor=1):
     try:
+        print("scan Shape",scan.shape)
+        print("Factor: ",factor," <<|>> ",spacing)
         resize_factor = factor * spacing
         new_real_shape = scan.shape * resize_factor
         new_shape = np.round(new_real_shape)
+        print("NewShape",new_shape)
         if 0 in scan.shape or 0 in new_shape:
             print("Warning: Zero dimension encountered in scan.shape or new_shape, skipping resize.")
             return scan, 0  # Skip resizing, return the original scan

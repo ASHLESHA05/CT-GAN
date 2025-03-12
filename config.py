@@ -100,8 +100,8 @@ else:
     config = {}
 
     # # Data Location
-    # config['healthy_scans_raw'] = r"D:\CapstoneProject\DataSet\HealthyBrainTest"
-    # config['healthy_coords'] = r"D:\CapstoneProject\Attack_prep\tumor_analysis.csv"
+    # config['healthy_scans_raw'] = r"D:\CapstoneProject\DataSet\HealthyBrain"
+    # config['healthy_coords'] = r"d:\CapstoneProject\Attack_prep\Healthy_brain_fake_tumor_loc.csv"
     # config['healthy_samples'] = "output2/healthy_samples.npy"
 
     # config['unhealthy_scans_raw'] = r"D:\CapstoneProject\DataSet\BraTS2021\BraTS2021_Training_Data"
