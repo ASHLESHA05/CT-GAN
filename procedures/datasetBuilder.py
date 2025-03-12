@@ -130,11 +130,13 @@ class Extractor:
             # print("Extracting Instance")
             X = []
             init_cube_shape = get_scaled_shape(cube_shape + 8, 1/spacing)
-            print("CutCubing")
+            
+            #print("CutCubing")
+            
             #print(f"Scan Shape{scan.shape} :: coord: {coord} :: init_Cube_shape_scaled: {init_cube_shape}")
             clean_cube_unscaled = cutCube(scan, coord, init_cube_shape, padd=-1000)
-            print("Scaling",clean_cube_unscaled)
-            print("Scaling shape",clean_cube_unscaled.shape)
+            #print("Scaling",clean_cube_unscaled)
+            # print("Scaling shape",clean_cube_unscaled.shape)
             x, resize_factor = scale_scan(clean_cube_unscaled,spacing)
             # perform data augmentations to generate more instances
             Xaug = self._augmentInstance(x)

@@ -9,15 +9,15 @@ def cutCube(X, center, shape, padd=0): #center is a 3d coord (zyx)
     hlx = np.round(shape[2] / 2)
     
     
-    print(f"Input scan shape: {X.shape}")
-    print(f"Requested center: {center}, Cube shape: {shape}")
+    # print(f"Input scan shape: {X.shape}")
+    # print(f"Requested center: {center}, Cube shape: {shape}")
     # print("Cut shapes hlz, hlx, hly: ",hlz,hlx,hly)
     # hlz, hly, hlx = np.round(shape[0] / 2), np.round(shape[1] / 2), np.round(shape[2] / 2)
-    print(f"Half-lengths (z, y, x): {hlz}, {hly}, {hlx}")
+    # print(f"Half-lengths (z, y, x): {hlz}, {hly}, {hlx}")
 
     start = center - np.array([hlz, hly, hlx])
     end = center + np.array([hlz, hly, hlx]) + 1
-    print(f"Start indices: {start}, End indices: {end}")
+    # print(f"Start indices: {start}, End indices: {end}")
 
 
 
@@ -27,16 +27,16 @@ def cutCube(X, center, shape, padd=0): #center is a 3d coord (zyx)
         print("Warning: Out of bounds! Adding padding.")
         
         Xn = np.ones(np.array(X.shape) + shape * 2) * padd
-        print("Ones Padded: ",Xn.shape)
+        # print("Ones Padded: ",Xn.shape)
         Xn[shape[0]:(shape[0] + X.shape[0]), shape[1]:(shape[1] + X.shape[1]), shape[2]:(shape[2] + X.shape[2])] = X
         centern = center + shape
-        print("Padded Image: ",Xn.shape)
-        print("Centern: ",centern)
-        print(f"Cut X start {int(centern[2] - hlx)} || {int(centern[2] - hlx + shape[2])}")
+        # print("Padded Image: ",Xn.shape)
+        # print("Centern: ",centern)
+        # print(f"Cut X start {int(centern[2] - hlx)} || {int(centern[2] - hlx + shape[2])}")
         cube = Xn[int(centern[0] - hlz):int(centern[0] - hlz + shape[0]),
                int(centern[1] - hly):int(centern[1] - hly + shape[1]), 
                int(centern[2] - hlx):int(centern[2] - hlx + shape[2])]
-        print("Cube Cut shape: ",cube.shape)
+        # print("Cube Cut shape: ",cube.shape)
         return np.copy(cube)
     else:
         cube = X[int(center[0] - hlz):int(center[0] - hlz + shape[0]), int(center[1] - hly):int(center[1] - hly + shape[1]),
