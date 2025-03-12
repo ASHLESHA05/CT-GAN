@@ -59,7 +59,8 @@ class Trainer:
 
         # Loss functions
         # self.criterion_GAN = nn.HuberLoss(delta=1.0)
-        self.criterion_GAN = nn.MSE()
+        self.criterion_GAN = nn.MSELoss()  # Mean Squared Error Loss
+
         self.criterion_pixelwise = nn.L1Loss()
 
         # Loss weights
